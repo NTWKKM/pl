@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to NTWKKM GitHub Pages</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* --- Day Theme (Default) --- */
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #244885; 
+      min-height: 100vh;
+      color: #FBE9D0; 
+      line-height: 1.6;
+      /* เพิ่ม transition ให้การเปลี่ยนสีนุ่มนวล */
+      transition: background-color 0.3s, color 0.3s;
+    }
+    header {
+      background: #244885; 
+      color: white; 
+      text-align: center;
+      padding: 25px 20px 20px 20px; 
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+      border-bottom: 4px solid #FBE9D0;
+      position: relative; /* เพื่อให้ปุ่ม Toggle อยู่ถูกที่ */
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    h1 {
+      font-size: 2.2em; 
+      margin: 0 0 10px 0;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .subtitle {
+      font-size: 1.1em; 
+      font-weight: 300;
+      color: #FBE9D0; 
+      opacity: 0.9;
+      transition: color 0.3s;
+    }
+    .card {
+      max-width: 1000px; 
+      margin: 30px auto;
+      background: #FBE9D0; 
+      border-radius: 12px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+      padding: 30px;
+      text-align: left;
+      transition: background-color 0.3s;
+    }
+    h2 {
+      color: #871F41; 
+      font-size: 1.5em;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 600;
+      border-bottom: 2px solid #e6dacb; 
+      padding-bottom: 10px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 30px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px; 
+    }
+    li {
+      margin-bottom: 0; 
+      font-size: 1.05em;
+    }
+    .card ul li a {
+      display: block;
+      color: #333;
+      background: #F5F5F5; 
+      text-decoration: none;
+      padding: 15px 20px;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+      font-weight: 500;
+      border: 1px solid #e0e0e0; 
+      height: 100%; 
+      box-sizing: border-box; 
+    }
+    .card ul li a:hover {
+      color: #fff;
+      background: #244885; 
+      border-color: #244885;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(36, 72, 133, 0.3);
+    }
+    .description {
+      font-size: 1.05em;
+      color: #555;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e6dacb;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .footer {
+      text-align: center;
+      margin: 50px auto 30px auto;
+      font-size: 0.9em;
+      color: #90AEAD;
+      transition: color 0.3s;
+    }
+    
+    /* --- 1. สไตล์สำหรับปุ่มสลับธีม --- */
+    #theme-toggle {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      background: #FBE9D0; /* Day: พื้นครีม */
+      color: #244885; /* Day: ตัวอักษรน้ำเงิน */
+      border: 1px solid #244885;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9em;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    #theme-toggle:hover {
+      opacity: 0.8;
+    }
+
+    /* --- 2. CSS สำหรับ Night Mode --- */
+    body.night {
+      background: #1a2b48; /* Darker Blue */
+    }
+    body.night header {
+      background: #1a2b48;
+      border-bottom-color: #3a4b69; /* Muted Darker Border */
+    }
+    body.night .subtitle {
+      color: #90AEAD; /* Muted Teal */
+    }
+    body.night .card {
+      background: #244885; /* Card becomes Deep Blue */
+    }
+    body.night .card h2 {
+      color: #FBE9D0; /* Cream Text */
+      border-bottom-color: #3a4b69;
+    }
+    body.night .card ul li a {
+      background: #1a2b48; /* Button is Darkest Blue */
+      color: #FBE9D0; /* Cream Text */
+      border-color: #3a4b69; /* Muted Border */
+    }
+    body.night .card ul li a:hover {
+      background: #FBE9D0; /* Hover is Cream */
+      color: #1a2b48; /* Text is Darkest Blue */
+      border-color: #FBE9D0;
+      box-shadow: 0 4px 10px rgba(251, 233, 208, 0.2);
+    }
+    body.night .description {
+      color: #FBE9D0; /* Cream Text */
+      border-top-color: #3a4b69;
+    }
+    body.night .footer {
+      color: #90AEAD; /* Muted Teal */
+    }
+    /* ปุ่ม Toggle ใน Night Mode */
+    body.night #theme-toggle {
+      background: #3a4b69; /* Night: พื้นสีเทาเข้ม */
+      color: #FBE9D0; /* Night: ตัวอักษรครีม */
+      border-color: #FBE9D0;
+    }
+    /* Media Query (ปรับปุ่มบนจอมือถือ) */
+    /* 1. ขยายขอบเขตจาก 640px เป็น 768px ให้ครอบคลุมแท็บเล็ตแนวตั้ง */
+    @media (max-width: 768px) { 
+      header { padding: 20px 15px 15px 15px; }
+      h1 { font-size: 1.8em; }
+
+      /* 2. ลดขนาด .subtitle และปรับ line-height เล็กน้อยในจอมือถือ */
+      .subtitle {
+        font-size: 1.0em; /* ลดขนาดลงจาก 1.1em */
+        line-height: 1.4;
+      }
+      
+      .card { 
+        padding: 20px;
+        margin: 20px;
+      }
+      ul {
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+      }
+      #theme-toggle {
+        /* (โค้ดเดิมของคุณส่วนนี้ถูกต้องแล้วครับ) */
+        /* ย้ายปุ่มไปไว้ตรงกลางใต้ Subtitle บนจอมือถือ */
+        position: static; 
+        margin-top: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to NTWKKM GitHub Pages</h1>
+    <div class="subtitle">Your hub for bookmarks, study resources, and projects</div>
+    <button id="theme-toggle">Night Mode</button>
+  </header>
+
+  <div class="card">
+    <h2>Featured Links & Projects</h2>
+    <ul>
+      <li>
+        <a href="https://medstat.netlify.app/" target="_blank">
+          Med statatistcs online
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/Toxico/" target="_blank">
+          Toxico Course Bookmarks
+        </a>
+      </li>
+      <li>
+         <a href="https://cpr-mnrh.vercel.app/" target="_blank">
+          MNRH CPR Recorder
+         </a>
+      </li>
+      <li>
+         <a href="https://cpr-mnrh.vercel.app/cpr_archrive" target="_blank">
+          CPR Archrive
+         </a>
+      </li>  
+      <li>
+        <a href="https://ntwkkm.github.io/QRcodegenarator/index.html" target="_blank">
+          QR code generator
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/present/ESICM%20part%202%20%5BICU-%20Nov-Nattawit%202%5D.pdf " target="_blank">
+          ESICM II[ICU- Nov-Nattawit]
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/present/ESICM%20part%202%20%5BAutosaved%5D.pptx" target="_blank">
+          PPT ESICM II[ICU- Nov-Nattawit]
+        </a>
+      </li> 
+      <li>
+        <a href="https://ntwkkm.github.io/present/Summary%20of%20Landmark%20Studies%20(Fluid).pdf" target="_blank">
+          LANDMARK STUDIES FLUID
+        </a>
+      </li> 
+      <li>
+        <a href="https://tomato-worthy-basilisk-257.mypinata.cloud/ipfs/bafybeidcslrmerg5bsanr3rfiq45bpjdsd5aejfoq3f5ncztzsoo4xruhe/" target="_blank">
+          ESICM 2024-2025
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm-n8n-final.fly.dev/" target="_blank">
+          ntwkkm-n8n
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/n8n/n8n.html" target="_blank">
+          Tutorrial n8n with fly.io
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/n8n/n8n-ai-router.html" target="_blank">
+          Tutorrial n8n router
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/n8n/n8n-git.html" target="_blank">
+          Tutorrial n8n with git
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/n8n/n8n-pubmed.html" target="_blank">
+          Tutorrial n8n-pubmed
+        </a>
+      </li> 
+      <li>
+        <a href="https://ntwkkm.github.io/present/hypokalemia/content%20hypokalemia.pdf" target="_blank">
+          content hypokalemia
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/present/hypokalemia/emcrit-content%20hypokalemia.pdf" target="_blank">
+          emcrit-content hypokalemia
+        </a>
+      </li>
+      <li>
+        <a href="https://ntwkkm.github.io/present/hypokalemia/HypoK%20-%20primary%20hyperaldo.pdf" target="_blank">
+          HypoK - primary hyperaldo
+        </a>
+      </li> 
+        <li>
+      <a href="https://ntwkkm.github.io/present/ACLS%202025Adult%20special%20circumstance.pdf" target="_blank">
+        ACLS 2025 Adult special
+      </a>
+        </li>
+          <li>
+        <a href="https://ntwkkm.github.io/research-KT.html" target="_blank">
+          research kt
+        </a>
+      </li>
+        <li>
+        <a href="https://ntwkkm.github.io/research-KT-5.html" target="_blank">
+          research kt-5
+        </a>
+      </li>
+    </ul>
+    <h2>Completed Projects</h2>
+    <ul>
+      <li>
+        <a href="https://rt-pa-mnrh-v4.vercel.app/" target="_blank">
+          rtPA-MNRH-V4-vercel
+        </a>
+      </li>
+      <li>
+        <a href="https://rtpa-mnrh.replit.app/" target="_blank">
+          rtPA-MNRH-V2-replit
+        </a>
+      </li>
+      <li>
+        <a href="https://rtpa-mnrh-v6-builder.netlify.app/" target="_blank">
+          rtPA-MNRH-V6-netilfy
+        </a>
+      </li>
+      <li>
+        <a href="https://rtpamnrh.vercel.app/" target="_blank">
+          rtPA-MNRH-V1-vercel
+        </a>
+      </li>
+      <li>
+        <a href="https://mnrhrefer.vercel.app/" target="_blank">
+          ED-MNRH-refer-vercel
+        </a>
+      </li>
+      <li>
+        <a href="https://er-mnrh-consult.replit.app/" target="_blank">
+          ED-MNRH-consult-replit
+        </a>
+      </li>
+      <li>
+        <a href="https://acetatox.netlify.app/" target="_blank">
+          Acetatox-netlify
+        </a>
+      </li>
+        <li>
+        <a href="https://shocksimulation.vercel.app/" target="_blank">
+          Shock simulation
+        </a>
+      </li>
+        <li>
+        <a href="https://ventsim.vercel.app/ target="_blank">
+          Ventsim
+        </a>
+      </li>
+       <li>
+        <a href="https://ntwkkm.github.io/present/ventsim.html" target="_blank">
+          LOG VENTSIM
+        </a>
+      </li> 
+    </ul>
+
+    <div class="description">
+      This GitHub Pages site is a repository of medical learning resources, created to support anyone interested in healthcare education.
+    </div>
+  </div>
+  
+  <div class="footer">
+    &copy; 2025 NTWKKM &nbsp;|&nbsp; Powered by GitHub Pages
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // ฟังก์ชันสำหรับตั้งค่าธีมและปุ่ม
+    function setTheme(theme) {
+      if (theme === 'night') {
+        body.classList.add('night');
+        localStorage.setItem('theme', 'night');
+        themeToggle.textContent = 'Day Mode'; // อัปเดตข้อความปุ่ม
+      } else {
+        body.classList.remove('night');
+        localStorage.setItem('theme', 'day');
+        themeToggle.textContent = 'Night Mode'; // อัปเดตข้อความปุ่ม
+      }
+    }
+
+    // เมื่อหน้าโหลด: ตรวจสอบธีมที่บันทึกไว้
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'night') {
+      setTheme('night');
+    } else {
+      setTheme('day'); // ค่าเริ่มต้นคือ Day
+    }
+
+    // เมื่อคลิกปุ่ม: สลับธีม
+    themeToggle.addEventListener('click', () => {
+      if (body.classList.contains('night')) {
+        setTheme('day');
+      } else {
+        setTheme('night');
+      }
+    });
+  </script>
+</body>
+</html>
